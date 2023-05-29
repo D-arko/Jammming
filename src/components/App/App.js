@@ -5,7 +5,7 @@ import SearchResults from '../SearchResults/SearchResults.js';
 import Track from '../Track/Track.js';
 import Tracklist from '../Tracklist/Tracklist.js';
 
-// mock hard-coded array of tracks from Spotify
+// mock hard-coded array of tracks from Spotify2
 const tracks = [
   {
     name: 'song1',
