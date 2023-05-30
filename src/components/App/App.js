@@ -42,6 +42,89 @@ const songName1 = 'songN1';
 const songName2 = 'songN2';
 const songName3 = 'songN3';
 
+  // Connecting to Spotify
+var client_id = 'CLIENT_ID';
+var redirect_uri = 'http://localhost:3000/callback';
+
+var state = generateRandomString(16);
+
+
+
+localStorage.setItem(stateKey, state);
+var scope = 'user-read-private user-read-email';
+
+var url = 'https://accounts.spotify.com/authorize';
+url += '?response_type=token';
+url += '&client_id=' + encodeURIComponent(client_id);
+url += '&scope=' + encodeURIComponent(scope);
+url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+url += '&state=' + encodeURIComponent(state);
+
+// Clear parameters from the URL
+const Spotify = {
+  accessToken: '',
+  expiresIn: 0,
+
+  getAccessToken() {
+    if (this.accessToken) {
+      return this.accessToken;
+    }
+
+    // Check if the access token and expiration time are in the URL
+    const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
+    const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
+
+    if (accessTokenMatch && expiresInMatch) {
+      this.accessToken = accessTokenMatch[1];
+      this.expiresIn = Number(expiresInMatch[1]);
+
+      // Clear parameters from the URL
+      window.setTimeout(() => {
+        this.accessToken = '';
+        this.expiresIn = 0;
+        window.history.pushState('Access Token', null, '/');
+      }, this.expiresIn * 1000);
+
+      // Return the access token
+      return this.accessToken;
+    }
+
+    // Redirect the user to the Spotify authorization URL if the access token is not in the URL
+    const redirectUri = 'http://localhost:3000'; // Replace with your app's redirect URI
+    const scopes = ['scope1', 'scope2']; // Replace with the scopes required for your app
+    const spotifyAuthUrl = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token`;
+
+    window.location = spotifyAuthUrl;
+  },
+
+  // Use the access token to make requests to the Spotify API
+  // Implement your API request logic here
+  // For example:
+  search(term) {
+    const accessToken = this.getAccessToken();
+
+    // Make API request using the access token
+    // Replace with your actual API request implementation
+    fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the API response data
+        console.log(data);
+      })
+      .catch(error => {
+        // Handle API request errors
+        console.log(error);
+      });
+  },
+};
+
+// export default Spotify;
+
+
 function App() {
   return (
     <>
