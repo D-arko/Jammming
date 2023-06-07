@@ -9,18 +9,19 @@ function Playlist(props) {
   const [snapshotId, setSnapshotId] = useState('');
 
   function handlePlaylistTitleChange(event) {
-    setPlaylistTitle(event.target.value);
+    const modifiedURL = usersPlaylistUrl.replace(/\/tracks$/, '');
     
-    fetch(usersPlaylistUrl, {
+    fetch(modifiedURL, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + accessToken,
         'Content-Type': 'applicaiton/json'
       },
       body: JSON.stringify({
-        name: playlistTitle
+        name: event.target.value
       })
-      });
+    });
+    setPlaylistTitle(event.target.value);
   }
   
   function addSongHandler(track) {
