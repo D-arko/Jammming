@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
+import './SearchBar.css';
 
 function generateRandomString(length) {
   var text = '';
@@ -73,14 +74,20 @@ function SearchBar(props) {
   };
 
   return (
-    <div>
+    <div className="search-bar">
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Search Spotify"
+        className="search-input"
         onChange={(event) => searchSpotify(event.target.value)}
-        />
-      <button onClick={handleLogin}>Log in with Spotify</button>
-      <SearchResults searchResults={searchResults} onAddSong={props.onAddSong} onRemoveSong={props.onRemoveSong} />
+      />
+      <button
+        onClick={handleLogin}
+        className="login-button"
+      >
+        Log in with Spotify
+      </button>
+    <SearchResults searchResults={searchResults} onAddSong={props.addSongHandler} onRemoveSong={props.onRemoveSong} />
     </div>
   );
 }

@@ -1,0 +1,50 @@
+/* Playlist Component */
+.playlist-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .playlist-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    color: #1db954;
+  }
+
+  .playlist-track {
+    margin-bottom: 10px;
+  }
+  
+  .track-name {
+    font-weight: bold;
+  }
+  
+  .track-artist {
+    color: #666;
+  }
+  
+  .track-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .remove-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  #get-playlist {
+    width: 33%;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

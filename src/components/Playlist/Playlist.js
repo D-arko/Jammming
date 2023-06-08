@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
+import './Playlist.css';
 
 function Playlist(props) {
   const [playlistTitle, setPlaylistTitle] = useState('');
@@ -157,18 +158,33 @@ function getCurrentUserPlaylist() {
   
   return (
     <>
-      <input type="text" value={playlistTitle} onChange={handlePlaylistTitleChange}></input>
-      {Array.isArray(usersPlaylistTracks) && usersPlaylistTracks.map(track => (
-        <div key={track.id}>
-        <strong>{track.name}</strong> by {track.artist}<button onClick={() => removeSongHandler(track.uri)}>-</button>
-        <p>Album: {track.album}</p>
-        <p>URI: {track.uri}</p>
-      </div>
-      ))}
-
+      <div className="playlist-container">
+      <h2 className="playlist-title">
+        <input
+          type="text"
+          value={playlistTitle}
+          onChange={handlePlaylistTitleChange}
+        />
+      </h2>
+      <SearchBar addSongHandler={addSongHandler} />
+      {Array.isArray(usersPlaylistTracks) &&
+        usersPlaylistTracks.map(track => (
+          <div className="playlist-track" key={track.id}>
+            <span className="track-name">{track.name}</span> -{' '}
+            <span className="track-artist">{track.artist}</span>
+            <div className="track-actions">
+              <button
+                className="remove-button"
+                onClick={() => removeSongHandler(track.uri)}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
       <p>{props.playlistTracks}</p>
-      <button onClick={getCurrentUserPlaylist}>Get Playlist</button>
-      <SearchBar onAddSong={addSongHandler} onRemoveSong={removeSongHandler} />
+      <button onClick={getCurrentUserPlaylist} id="get-playlist">Get Playlist</button>
+    </div>
     </>
   );
 }
