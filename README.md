@@ -1,1 +1,1 @@
-Spotify API is React web application that uses Spotify API. It can be used to search Spotify library and add songs to personal playlists Spotify accounts.
+Spotify API is React web application that uses Spotify API. It can be used to search Spotify library and add songs to playlists on personal Spotify accounts.
