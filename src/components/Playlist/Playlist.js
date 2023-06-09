@@ -129,8 +129,8 @@ function getCurrentUserPlaylist() {
       setusersPlaylistUrl(data.items[0].tracks.href);
     })
     .catch(error => {
-        console.log(error);
-      });
+      console.log(error);
+    });
    }
 
   function getTracksFromPlaylist() {

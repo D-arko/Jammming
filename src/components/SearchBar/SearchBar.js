@@ -18,7 +18,7 @@ function SearchBar(props) {
 
   function handleLogin() {
     var clientId = 'b4ee7b6e5728412384b03566fd5e7955';
-    var redirectUri = 'http://localhost:3000';
+    var redirectUri = 'https://spotify-api-darko.netlify.app';
 
     var state = generateRandomString(16);
     var stateKey = 'spotify_auth_state';
