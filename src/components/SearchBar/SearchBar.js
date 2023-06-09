@@ -10,11 +10,12 @@ function generateRandomString(length) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
-};
+}
 
 function SearchBar(props) {
   const [searchResults, setSearchResults] = useState([]);
   const [accessToken, setAccessToken] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function handleLogin() {
     var clientId = 'b4ee7b6e5728412384b03566fd5e7955';
@@ -34,15 +35,16 @@ function SearchBar(props) {
     url += '&state=' + encodeURIComponent(state);
 
     window.location = url;
-  
   }
-  useEffect(() => {
-  const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
 
-  if (accessTokenMatch) {
-    setAccessToken(accessTokenMatch[1]);
-  }
-}, []);
+  useEffect(() => {
+    const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
+
+    if (accessTokenMatch) {
+      setAccessToken(accessTokenMatch[1]);
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const searchSpotify = (query) => {
     if (query === '') {
@@ -75,19 +77,21 @@ function SearchBar(props) {
 
   return (
     <div className="search-bar">
+      {isLoggedIn && <p>You are now logged in</p>}
       <input
         type="text"
         placeholder="Search Spotify"
         className="search-input"
         onChange={(event) => searchSpotify(event.target.value)}
       />
-      <button
-        onClick={handleLogin}
-        className="login-button"
-      >
+      <button onClick={handleLogin} className="login-button">
         Log in with Spotify
       </button>
-    <SearchResults searchResults={searchResults} onAddSong={props.addSongHandler} onRemoveSong={props.onRemoveSong} />
+      <SearchResults
+        searchResults={searchResults}
+        onAddSong={props.addSongHandler}
+        onRemoveSong={props.onRemoveSong}
+      />
     </div>
   );
 }
